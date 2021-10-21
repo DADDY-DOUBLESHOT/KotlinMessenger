@@ -1,3 +1,25 @@
 <resources>
-    <string name="app_name">Chat App</string>
+
+
+    <string name="app_name">Kotlin Messenger</string>
+
+<!--Login -->
+
+    <string name="login_title_tv">LOG IN</string>
+    <string name="login_info_tv">Log in with one of the following options.</string>
+    <string name="login_email_tv">Email</string>
+    <string name="login_pass_tv">Password</string>
+    <string name="login_btn">LOGIN</string>
+    <string name="login_info_2_tv">Dont have an account? </string>
+    <string name="login_info_3_tv">Sign up</string>
+    <string name="login_example_email_et">example@mail.com</string>
+    <string name="login_example_pass_et">Enter your password</string>
+
+
+
+
+
+<!--***************-->
+
+
 </resources>
