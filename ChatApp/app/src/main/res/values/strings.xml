@@ -2,8 +2,11 @@
 
 
     <string name="app_name">Kotlin Messenger</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an app widget description</string>
 
-<!--Login -->
+    <!--Login -->
 
     <string name="login_title_tv">LOG IN</string>
     <string name="login_info_tv">Log in with one of the following options.</string>
@@ -17,9 +20,24 @@
 
 
 
+    <!--***************-->
+
+    <!--    signup-->
+
+    <string name="signup_title_tv">Sign up</string>
+    <string name="signup_info_tv">Sign up with one of the following options.</string>
+    <string name="signup_name_tv">Name</string>
+    <string name="signup_email_tv">Email</string>
+    <string name="signup_pass_tv">Password</string>
+    <string name="signup_btn">Create Account</string>
+    <string name="signup_info_2_tv">Already have an account? </string>
+    <string name="signup_info_3_tv">Log in</string>
+    <string name="signup_example_email_et">example@mail.com</string>
+    <string name="signup_example_pass_et">Enter your password</string>
+    <string name="signup_example_name_et">John Doe</string>
 
 
-<!--***************-->
 
+    <!--***************-->
 
 </resources>

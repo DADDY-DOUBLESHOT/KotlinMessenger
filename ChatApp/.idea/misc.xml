@@ -4,12 +4,22 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/#/android/KotlinMessenger/ChatApp/app/src/main/res/drawable-anydpi/login_google.xml" value="0.403125" />
+        <entry key="..\:/#/android/KotlinMessenger/ChatApp/app/src/main/res/drawable/bg_apple_ic.xml" value="0.23489583333333333" />
+        <entry key="..\:/#/android/KotlinMessenger/ChatApp/app/src/main/res/drawable/bg_google_ic.xml" value="0.23489583333333333" />
         <entry key="..\:/#/android/KotlinMessenger/ChatApp/app/src/main/res/drawable/editext_bg.xml" value="0.403125" />
+        <entry key="..\:/#/android/KotlinMessenger/ChatApp/app/src/main/res/drawable/edittext_border_disabled.xml" value="0.23489583333333333" />
+        <entry key="..\:/#/android/KotlinMessenger/ChatApp/app/src/main/res/drawable/edittext_border_enabled.xml" value="0.23489583333333333" />
+        <entry key="..\:/#/android/KotlinMessenger/ChatApp/app/src/main/res/drawable/edittext_border_pressed.xml" value="0.23489583333333333" />
+        <entry key="..\:/#/android/KotlinMessenger/ChatApp/app/src/main/res/drawable/edittext_border_selector.xml" value="0.23489583333333333" />
+        <entry key="..\:/#/android/KotlinMessenger/ChatApp/app/src/main/res/drawable/edittext_border_style.xml" value="0.403125" />
         <entry key="..\:/#/android/KotlinMessenger/ChatApp/app/src/main/res/drawable/ic_icons8_apple_logo.xml" value="0.403125" />
         <entry key="..\:/#/android/KotlinMessenger/ChatApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.403125" />
         <entry key="..\:/#/android/KotlinMessenger/ChatApp/app/src/main/res/drawable/login_apple_btn.xml" value="0.403125" />
         <entry key="..\:/#/android/KotlinMessenger/ChatApp/app/src/main/res/drawable/login_button.xml" value="0.403125" />
         <entry key="..\:/#/android/KotlinMessenger/ChatApp/app/src/main/res/layout/activity_main.xml" value="0.38697916666666665" />
+        <entry key="..\:/#/android/KotlinMessenger/ChatApp/app/src/main/res/layout/activity_signup.xml" value="0.33" />
+        <entry key="..\:/#/android/KotlinMessenger/ChatApp/app/src/main/res/layout/style.xml" value="0.21875" />
+        <entry key="..\:/#/android/KotlinMessenger/ChatApp/app/src/main/res/xml/edittext_style.xml" value="0.21875" />
       </map>
     </option>
   </component>
