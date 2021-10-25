@@ -16,6 +16,12 @@ class MainActivity : AppCompatActivity()
     lateinit var signup_link:TextView;
     lateinit var signup_Intent :Intent;
 
+
+
+
+    lateinit var  email:String;
+    lateinit var  password:String;
+
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -29,6 +35,13 @@ class MainActivity : AppCompatActivity()
         signup_link=findViewById(R.id.signup_link);
 
 
+//        login pre setting
+        val bundle:Bundle?=intent.extras;
+        email= bundle?.getString("usr_email").toString();
+        password=bundle?.getString("usr_pass").toString();
+
+
+
         google_account.setOnClickListener {
 
                 Toast.makeText(this,"Google Account not linked",Toast.LENGTH_SHORT).show();
@@ -37,6 +50,8 @@ class MainActivity : AppCompatActivity()
 
             Toast.makeText(this,"Apple Account not linked",Toast.LENGTH_SHORT).show();
         };
+
+
         login_btn.setOnClickListener {
 
             Toast.makeText(this,"Will be connecting to login page",Toast.LENGTH_SHORT).show();
@@ -47,6 +62,20 @@ class MainActivity : AppCompatActivity()
             startActivity(signup_Intent);
 
         };
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        if(!email.isNullOrEmpty())usr_email.setText(email);
+        if(!password.isNullOrEmpty())usr_pass.setText(password);
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(!email.isNullOrEmpty())usr_email.setText(email);
+        if(!password.isNullOrEmpty())usr_pass.setText(password);
 
     }
 }
