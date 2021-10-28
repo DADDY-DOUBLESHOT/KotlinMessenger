@@ -8,7 +8,7 @@
 <LinearLayout
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-tools:context=".MainActivity"
+tools:context=".login"
 android:orientation="vertical"
 android:background="@color/mate_black"
 android:padding="10dp"
@@ -55,7 +55,7 @@ android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="120dp"
     android:orientation="horizontal"
-    android:layout_margin="10dp"
+    android:layout_margin="0dp"
     android:layout_gravity="center"
     android:foregroundGravity="center"
 
@@ -91,7 +91,38 @@ android:padding="10dp"
     </LinearLayout>
 
 
+
 </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="@string/signup_image_info"
+            android:textColor="@color/dark_grey"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            />
+
+        <ImageView
+            android:id="@+id/signup_usr_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@mipmap/ic_signup" />
+
+
+    </LinearLayout>
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

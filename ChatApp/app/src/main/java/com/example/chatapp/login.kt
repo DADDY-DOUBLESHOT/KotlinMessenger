@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 
-class MainActivity : AppCompatActivity()
+class login : AppCompatActivity()
 {
     lateinit var google_account:ImageView;
     lateinit var apple_account:ImageView;
@@ -37,8 +37,8 @@ class MainActivity : AppCompatActivity()
 
 //        login pre setting
         val bundle:Bundle?=intent.extras;
-        email= bundle?.getString("usr_email").toString();
-        password=bundle?.getString("usr_pass").toString();
+        if(bundle?.getString("usr_email").toString()!=null)email=bundle?.getString("usr_email").toString();
+        if(bundle?.getString("usr_pass").toString()!=null)password=bundle?.getString("usr_pass").toString();
 
 
 
@@ -67,15 +67,15 @@ class MainActivity : AppCompatActivity()
 
     override fun onRestart() {
         super.onRestart()
-        if(!email.isNullOrEmpty())usr_email.setText(email);
-        if(!password.isNullOrEmpty())usr_pass.setText(password);
+        if(email!="null")usr_email.setText(email);
+        if(password!="null")usr_pass.setText(password);
 
     }
 
     override fun onResume() {
         super.onResume()
-        if(!email.isNullOrEmpty())usr_email.setText(email);
-        if(!password.isNullOrEmpty())usr_pass.setText(password);
+        if(email!="null")usr_email.setText(email);
+        if(password!="null")usr_pass.setText(password);
 
     }
 }

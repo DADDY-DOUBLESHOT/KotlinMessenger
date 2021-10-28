@@ -1,14 +1,16 @@
 package com.example.chatapp
 
+import android.app.Activity
 import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
+import android.provider.MediaStore
 import android.widget.*
-import androidx.core.os.HandlerCompat.postDelayed
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import java.net.URI
 import java.util.*
 import java.util.regex.Pattern
 import kotlin.concurrent.schedule
@@ -24,7 +26,13 @@ class signup : AppCompatActivity()
     lateinit var signin_create_ac:Button;
     lateinit var login_link:TextView;
 
+
+    lateinit var signup_image_btn:ImageView;
+    lateinit var profile_pic_uri:Uri;
+
     lateinit var login_intent:Intent;
+    lateinit var signup_img_intent:Intent;
+
 
     lateinit var mAuth :FirebaseAuth;
     override fun onCreate(savedInstanceState: Bundle?)
@@ -42,6 +50,8 @@ class signup : AppCompatActivity()
         signin_usr_pass=findViewById(R.id.signup_usr_pass);
         signin_create_ac=findViewById(R.id.signup_create_btn);
         login_link=findViewById(R.id.login_link);
+        signup_image_btn=findViewById(R.id.signup_usr_img);
+
 
 
 //        firebase
@@ -59,20 +69,24 @@ class signup : AppCompatActivity()
 //create listener
         signin_create_ac.setOnClickListener {
 
-            if(signin_usr_name.text.isEmpty())
+            if(!emailCheck())
             {
-
+                Toast.makeText(this,"Please enter valid email address",Toast.LENGTH_SHORT).show();
             }
-            if(signin_usr_email.text.isEmpty())
+            else if(!passwordCheck())
             {
-
+                Toast.makeText(this,"Please enter a strong password",Toast.LENGTH_SHORT).show();
             }
-            if(signin_usr_pass.text.isEmpty())
+            else if(!nameCheck())
             {
-
+                Toast.makeText(this,"Please enter name with more than 4 character ",Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                firebaseCreate();
             }
 
-            firebaseCreate();
+
         };
 
 
@@ -80,36 +94,70 @@ class signup : AppCompatActivity()
 
         signin_bck_btn.setOnClickListener{
 
-            login_intent= Intent(this,MainActivity::class.java);
+            login_intent= Intent(this,login::class.java);
             startActivity(login_intent);
         };
 
         login_link.setOnClickListener {
-            login_intent= Intent(this,MainActivity::class.java);
+            login_intent= Intent(this,login::class.java);
             startActivity(login_intent);
         };
 
+//    signin img listeners
+
+       signup_image_btn.setOnClickListener {
+
+           signup_img_intent = Intent(Intent.ACTION_PICK);
+           signup_img_intent.type="image/*";
+
+           startActivityForResult(signup_img_intent,0)
+
+       }
 
 
 
     }
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode==0&&resultCode==Activity.RESULT_OK&&data!=null)
+        {
+            val profile_pic_uri=data.data;
+            val bitmap=MediaStore.Images.Media.getBitmap(contentResolver,profile_pic_uri);
+
+            val bitmapDrawable=BitmapDrawable(bitmap);
+
+            signup_image_btn.setBackgroundDrawable(bitmapDrawable);
+
+            Toast.makeText(this,"Image upload stage 1",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+
 //    firebase activities
+
+//    user-creation
     private fun firebaseCreate()
     {
         mAuth.createUserWithEmailAndPassword(signin_usr_email.text.toString(),signin_usr_pass.text.toString())
             .addOnCompleteListener{
 
-                login_intent= Intent(this,MainActivity::class.java);
+                login_intent= Intent(this,login::class.java);
                 login_intent.putExtra("usr_email",signin_usr_email.text);
                 login_intent.putExtra("usr_pass",signin_usr_pass.text);
+                FirebaseProfileUpload();
 
                 Timer("Creating",false).schedule(500)
                 {
                        startActivity(login_intent);
                 }
 
-                Toast.makeText(this,"Registration Successfully done ",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this,"Registration Successfully done ",Toast.LENGTH_SHORT).show();
+
             }
 
             .addOnCanceledListener {
@@ -119,26 +167,30 @@ class signup : AppCompatActivity()
 
             .addOnFailureListener {
 
-                if(!emailCheck())
-                {
-                    Toast.makeText(this,"Please enter valid email address",Toast.LENGTH_SHORT).show();
-                }
-                else if(!passwordCheck())
-                {
-                    Toast.makeText(this,"Please enter a strong password",Toast.LENGTH_SHORT).show();
-                }
-                else if(!nameCheck())
-                {
-                    Toast.makeText(this,"Please enter name with more than 4 character ",Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+
+
                     Toast.makeText(this,"Sorry there was some problem please try again",Toast.LENGTH_SHORT).show();
-                }
+
 
 
             }
     }
+//      profile-pic upload
+
+    private fun FirebaseProfileUpload()
+    {
+        if(profile_pic_uri==null)return ;
+
+        val filename=UUID.randomUUID().toString();
+        val ref=FirebaseStorage.getInstance().getReference("/images/$filename")
+
+        ref.putFile(profile_pic_uri!!)
+            .addOnSuccessListener {
+                Toast.makeText(this,"Image uploaded",Toast.LENGTH_SHORT).show();
+            }
+
+    }
+
 
 
 //  name checking
@@ -182,3 +234,4 @@ class signup : AppCompatActivity()
         return PASSWORD_PATTERN.matcher(signin_usr_pass.text).matches();
     }
 }
+
