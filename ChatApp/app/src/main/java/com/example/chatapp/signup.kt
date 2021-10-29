@@ -1,15 +1,29 @@
 package com.example.chatapp
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Icon
+import android.media.Image
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
+import android.util.Log
 import android.widget.*
+import androidx.annotation.RequiresApi
+import com.example.chatapp.R.id.signup_usr_img
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.IgnoreExtraProperties
+import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storageMetadata
 import java.net.URI
 import java.util.*
 import java.util.regex.Pattern
@@ -28,13 +42,17 @@ class signup : AppCompatActivity()
 
 
     lateinit var signup_image_btn:ImageView;
-    lateinit var profile_pic_uri:Uri;
+    lateinit var  profile_pic_uri: Uri;
+    lateinit var  profile_pic_url: String;
 
     lateinit var login_intent:Intent;
     lateinit var signup_img_intent:Intent;
 
 
-    lateinit var mAuth :FirebaseAuth;
+    private lateinit var fb_mAuth :FirebaseAuth;
+    private lateinit var  fb_profile_image:FirebaseStorage;
+    private lateinit var fb_userDB:FirebaseFirestore;
+
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -50,12 +68,20 @@ class signup : AppCompatActivity()
         signin_usr_pass=findViewById(R.id.signup_usr_pass);
         signin_create_ac=findViewById(R.id.signup_create_btn);
         login_link=findViewById(R.id.login_link);
-        signup_image_btn=findViewById(R.id.signup_usr_img);
+        signup_image_btn=findViewById(signup_usr_img);
+
+        profile_pic_uri= Uri.EMPTY;
+        profile_pic_url="null";
 
 
 
 //        firebase
-        mAuth= FirebaseAuth.getInstance();
+//              authentication
+        fb_mAuth= FirebaseAuth.getInstance();
+//              profile-image
+        fb_profile_image= FirebaseStorage.getInstance();
+//                user-data
+        fb_userDB= FirebaseFirestore.getInstance();
 
 //        listeners
 //        imagelistener
@@ -118,21 +144,23 @@ class signup : AppCompatActivity()
 
     }
 
-
+// profile selection will be done here
+    @SuppressLint("ResourceType")
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+
         if(requestCode==0&&resultCode==Activity.RESULT_OK&&data!=null)
         {
-            val profile_pic_uri=data.data;
-            val bitmap=MediaStore.Images.Media.getBitmap(contentResolver,profile_pic_uri);
 
-            val bitmapDrawable=BitmapDrawable(bitmap);
+            profile_pic_uri=data.data!!;
+            val ic:Icon?= Icon.createWithContentUri(profile_pic_uri);
+            signup_image_btn.setImageIcon(ic);
+            Toast.makeText(this,"Image Selected ",Toast.LENGTH_SHORT).show();
 
-            signup_image_btn.setBackgroundDrawable(bitmapDrawable);
-
-            Toast.makeText(this,"Image upload stage 1",Toast.LENGTH_SHORT).show();
         }
+
     }
 
 
@@ -143,20 +171,31 @@ class signup : AppCompatActivity()
 //    user-creation
     private fun firebaseCreate()
     {
-        mAuth.createUserWithEmailAndPassword(signin_usr_email.text.toString(),signin_usr_pass.text.toString())
+        fb_mAuth.createUserWithEmailAndPassword(signin_usr_email.text.toString(),signin_usr_pass.text.toString())
             .addOnCompleteListener{
 
                 login_intent= Intent(this,login::class.java);
                 login_intent.putExtra("usr_email",signin_usr_email.text);
                 login_intent.putExtra("usr_pass",signin_usr_pass.text);
-                FirebaseProfileUpload();
 
                 Timer("Creating",false).schedule(500)
                 {
                        startActivity(login_intent);
                 }
 
-//                Toast.makeText(this,"Registration Successfully done ",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"Registration Successfully done ",Toast.LENGTH_SHORT).show();
+
+            }
+            .addOnSuccessListener {
+
+
+//              profile-pic upload to server
+                FirebaseProfileUpload();
+
+
+
+
+
 
             }
 
@@ -179,18 +218,44 @@ class signup : AppCompatActivity()
 
     private fun FirebaseProfileUpload()
     {
-        if(profile_pic_uri==null)return ;
 
-        val filename=UUID.randomUUID().toString();
-        val ref=FirebaseStorage.getInstance().getReference("/images/$filename")
+        if(profile_pic_uri==null)return;
 
-        ref.putFile(profile_pic_uri!!)
-            .addOnSuccessListener {
-                Toast.makeText(this,"Image uploaded",Toast.LENGTH_SHORT).show();
+        val filename=filenameCreate();
+
+        fb_profile_image.getReference("/profile_pics/$filename").putFile(profile_pic_uri!!)
+            .addOnCompleteListener {
+                    profile_pic_url= it.result?.metadata?.path.toString();
+                //                user db creation in server
+                userDBUpload();
+
             }
 
     }
+//      user-databse-save
+    private fun userDBUpload()
+    {
 
+        if(profile_pic_url=="null")return;
+        val userid=fb_mAuth.uid;
+
+
+        val uniqueid=signin_usr_name.text.toString()+"_"+filenameCreate();
+        val user =User(userid,signin_usr_name.text.toString(),profile_pic_url);
+//        val user= hashMapOf(
+//            "uid" to userid.toString(),
+//            "username" to signin_usr_name.text.toString(),
+//            "profileURL" to profile_pic_url
+//        );
+        fb_userDB.collection("users").document(uniqueid)
+            .set(user)
+            .addOnSuccessListener {
+//                Toast.makeText(this,"user account created ",Toast.LENGTH_SHORT).show();
+            }
+            .addOnFailureListener {
+                Toast.makeText(this,"Error creating user ",Toast.LENGTH_SHORT).show();
+            }
+    }
 
 
 //  name checking
@@ -233,5 +298,13 @@ class signup : AppCompatActivity()
 
         return PASSWORD_PATTERN.matcher(signin_usr_pass.text).matches();
     }
+
+//    filename generator
+    private fun filenameCreate():String
+    {
+            return UUID.randomUUID().toString();
+    }
 }
 
+@IgnoreExtraProperties
+data class User(val uid:String?=null,val username:String?=null,val profile_pic :String?=null){}
