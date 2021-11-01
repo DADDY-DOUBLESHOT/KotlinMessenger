@@ -10,10 +10,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ChatApp">
+
+        <activity
+            android:name=".msgscreen"
+            android:exported="false" />
         <activity
             android:name=".signup"
             android:exported="true" />
-
         <activity
             android:name=".login"
             android:exported="true">
@@ -23,7 +26,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".new_msgscreen"
+            android:exported="false" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".msgscreen"
+                />
+        </activity>
     </application>
 
 </manifest>

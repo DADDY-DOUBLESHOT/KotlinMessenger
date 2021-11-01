@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/mscreen_newmsg"
+        android:title="New Message"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/mscreen_exit"
+        android:title="Exit"
+        app:showAsAction="ifRoom"
+        />
+
+</menu>

@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 
 class login : AppCompatActivity()
 {
@@ -15,12 +17,10 @@ class login : AppCompatActivity()
     lateinit var login_btn:Button;
     lateinit var signup_link:TextView;
     lateinit var signup_Intent :Intent;
+    lateinit var msgscreen_Intent:Intent;
 
+    lateinit var  fb_mAuth:FirebaseAuth;
 
-
-
-    lateinit var  email:String;
-    lateinit var  password:String;
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -34,11 +34,14 @@ class login : AppCompatActivity()
         login_btn=findViewById(R.id.login_btn);
         signup_link=findViewById(R.id.signup_link);
 
-
-//        login pre setting
-        val bundle:Bundle?=intent.extras;
-        if(bundle?.getString("usr_email").toString()!=null)email=bundle?.getString("usr_email").toString();
-        if(bundle?.getString("usr_pass").toString()!=null)password=bundle?.getString("usr_pass").toString();
+//        Checking  user already exist
+        fb_mAuth= FirebaseAuth.getInstance();
+        if(fb_mAuth.currentUser!=null)
+        {
+            msgscreen_Intent=Intent(this,msgscreen::class.java);
+            msgscreen_Intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(msgscreen_Intent);
+        }
 
 
 
@@ -54,11 +57,15 @@ class login : AppCompatActivity()
 
         login_btn.setOnClickListener {
 
-            Toast.makeText(this,"Will be connecting to login page",Toast.LENGTH_SHORT).show();
+            fb_mAuth.signInWithEmailAndPassword(usr_email.text.toString(),usr_pass.text.toString());
+            msgscreen_Intent=Intent(this,msgscreen::class.java);
+            msgscreen_Intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(msgscreen_Intent);
         };
         signup_link.setOnClickListener {
 
             signup_Intent= Intent(this,signup::class.java);
+            signup_Intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(signup_Intent);
 
         };
@@ -67,15 +74,19 @@ class login : AppCompatActivity()
 
     override fun onRestart() {
         super.onRestart()
-        if(email!="null")usr_email.setText(email);
-        if(password!="null")usr_pass.setText(password);
+
 
     }
 
     override fun onResume() {
         super.onResume()
-        if(email!="null")usr_email.setText(email);
-        if(password!="null")usr_pass.setText(password);
+        if(fb_mAuth.currentUser!=null)
+        {
+            msgscreen_Intent=Intent(this,msgscreen::class.java);
+            msgscreen_Intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(msgscreen_Intent);
+        }
+
 
     }
 }

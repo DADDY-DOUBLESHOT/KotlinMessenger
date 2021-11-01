@@ -19,7 +19,6 @@
     <string name="login_example_pass_et">Enter your password</string>
 
 
-
     <!--***************-->
 
     <!--    signup-->
@@ -36,8 +35,6 @@
     <string name="signup_example_pass_et">Enter your password</string>
     <string name="signup_example_name_et">John Doe</string>
     <string name="signup_image_info">Select an image to upload </string>
-
-
 
 
     <!--***************-->

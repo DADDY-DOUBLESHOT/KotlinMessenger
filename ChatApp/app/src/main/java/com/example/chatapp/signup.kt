@@ -47,6 +47,7 @@ class signup : AppCompatActivity()
 
     lateinit var login_intent:Intent;
     lateinit var signup_img_intent:Intent;
+    lateinit var msgscreen_intent:Intent;
 
 
     private lateinit var fb_mAuth :FirebaseAuth;
@@ -174,13 +175,12 @@ class signup : AppCompatActivity()
         fb_mAuth.createUserWithEmailAndPassword(signin_usr_email.text.toString(),signin_usr_pass.text.toString())
             .addOnCompleteListener{
 
-                login_intent= Intent(this,login::class.java);
-                login_intent.putExtra("usr_email",signin_usr_email.text);
-                login_intent.putExtra("usr_pass",signin_usr_pass.text);
+                msgscreen_intent= Intent(this,login::class.java);
+
 
                 Timer("Creating",false).schedule(500)
                 {
-                       startActivity(login_intent);
+                       startActivity(msgscreen_intent);
                 }
 
                 Toast.makeText(this,"Registration Successfully done ",Toast.LENGTH_SHORT).show();
