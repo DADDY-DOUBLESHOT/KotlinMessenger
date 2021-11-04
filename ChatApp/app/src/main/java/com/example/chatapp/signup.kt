@@ -307,4 +307,6 @@ class signup : AppCompatActivity()
 }
 
 @IgnoreExtraProperties
-data class User(val uid:String?=null,val username:String?=null,val profile_pic :String?=null){}
+data class User(val uid:String?=null,val username:String?=null,val profile_pic :String?=null){
+    constructor():this("","","");
+}
