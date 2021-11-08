@@ -72,7 +72,7 @@ class signup : AppCompatActivity()
         signup_image_btn=findViewById(signup_usr_img);
 
         profile_pic_uri= Uri.EMPTY;
-        profile_pic_url="null";
+//        profile_pic_url="";
 
 
 
@@ -225,9 +225,19 @@ class signup : AppCompatActivity()
 
         fb_profile_image.getReference("/profile_pics/$filename").putFile(profile_pic_uri!!)
             .addOnCompleteListener {
-                    profile_pic_url= it.result?.metadata?.path.toString();
+
+
+                fb_profile_image.getReference("/profile_pics/$filename").downloadUrl.addOnSuccessListener {
+
+                    profile_pic_url=it.toString();
+                    Toast.makeText(this,"profile pic url : $profile_pic_url",Toast.LENGTH_SHORT).show();
+                    Log.d("profile","profile pic url : $profile_pic_url")
+
+                        userDBUpload();
+                    }
+
                 //                user db creation in server
-                userDBUpload();
+
 
             }
 
@@ -236,7 +246,7 @@ class signup : AppCompatActivity()
     private fun userDBUpload()
     {
 
-        if(profile_pic_url=="null")return;
+        if(profile_pic_url==null)return;
         val userid=fb_mAuth.uid;
 
 
@@ -250,7 +260,7 @@ class signup : AppCompatActivity()
         fb_userDB.collection("users").document(uniqueid)
             .set(user)
             .addOnSuccessListener {
-//                Toast.makeText(this,"user account created ",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"user account created ",Toast.LENGTH_SHORT).show();
             }
             .addOnFailureListener {
                 Toast.makeText(this,"Error creating user ",Toast.LENGTH_SHORT).show();

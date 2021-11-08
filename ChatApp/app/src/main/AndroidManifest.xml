@@ -28,11 +28,18 @@
         </activity>
         <activity
             android:name=".new_msgscreen"
-            android:exported="false" >
+            android:exported="false">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".msgscreen"
-                />
+                android:value=".msgscreen" />
+        </activity>
+        <activity
+            android:name=".chatlog"
+            android:exported="false">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".msgscreen"
+            />
         </activity>
     </application>
 

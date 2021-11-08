@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="5dp"
+    android:layout_gravity="center"
+    android:gravity="right"
+    >
+
+    <TextView
+        android:id="@+id/chatlog_to_msg"
+        android:text="Chat from SENDER"
+        android:layout_width="wrap_content"
+        android:maxWidth="250dp"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_500"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        android:padding="5dp"
+
+        />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/chatlog_to_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_profile_pic"
+        android:background="@drawable/profile_pic_round_bg"
+        android:layout_marginLeft="5dp"
+        />
+
+</LinearLayout>
