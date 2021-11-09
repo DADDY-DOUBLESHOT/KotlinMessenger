@@ -11,9 +11,11 @@ import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.versionedparcelable.VersionedParcelize
 import com.example.chatapp.R.id.signup_usr_img
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -24,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storageMetadata
+import kotlinx.parcelize.Parcelize
 import java.net.URI
 import java.util.*
 import java.util.regex.Pattern
@@ -246,7 +249,7 @@ class signup : AppCompatActivity()
     private fun userDBUpload()
     {
 
-        if(profile_pic_url==null)return;
+//        if(profile_pic_url==null)return;
         val userid=fb_mAuth.uid;
 
 
@@ -317,6 +320,8 @@ class signup : AppCompatActivity()
 }
 
 @IgnoreExtraProperties
-data class User(val uid:String?=null,val username:String?=null,val profile_pic :String?=null){
+
+@Parcelize
+class User(val uid:String?=null,val username:String?=null,val profile_pic :String?=null) :Parcelable{
     constructor():this("","","");
 }
