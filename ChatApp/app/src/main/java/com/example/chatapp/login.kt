@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
+import com.google.firebase.auth.EmailAuthCredential
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 
@@ -34,6 +36,10 @@ class login : AppCompatActivity()
         login_btn=findViewById(R.id.login_btn);
         signup_link=findViewById(R.id.signup_link);
 
+
+
+
+
 //        Checking  user already exist
         fb_mAuth= FirebaseAuth.getInstance();
         if(fb_mAuth.currentUser!=null)
@@ -57,10 +63,19 @@ class login : AppCompatActivity()
 
         login_btn.setOnClickListener {
 
-            fb_mAuth.signInWithEmailAndPassword(usr_email.text.toString(),usr_pass.text.toString());
-            msgscreen_Intent=Intent(this,msgscreen::class.java);
-            msgscreen_Intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(msgscreen_Intent);
+
+
+            fb_mAuth.signInWithEmailAndPassword(usr_email.text.toString(),usr_pass.text.toString())
+                .addOnSuccessListener {
+                    Log.d("user","${fb_mAuth.uid}")
+                    msgscreen_Intent=Intent(this,msgscreen::class.java);
+                    msgscreen_Intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(msgscreen_Intent);
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this,"Wrong usr",Toast.LENGTH_SHORT).show();
+                }
+
         };
         signup_link.setOnClickListener {
 

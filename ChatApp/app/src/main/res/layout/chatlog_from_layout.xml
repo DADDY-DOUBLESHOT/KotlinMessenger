@@ -5,26 +5,20 @@
     android:orientation="horizontal"
     android:layout_margin="5dp"
     android:layout_gravity="center"
-    android:gravity="left"
+    android:gravity="right"
     >
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/chatlog_from_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_profile_pic"
-        android:background="@drawable/profile_pic_round_bg"
-        android:layout_marginRight="5dp"
-        />
+
     <TextView
         android:id="@+id/chatlog_from_msg"
         android:text="Chat from Recipient"
         android:layout_width="wrap_content"
         android:maxWidth="250dp"
         android:layout_height="wrap_content"
-        android:background="@color/purple_500"
+        android:background="@drawable/profile_pic_round_bg"
         android:textColor="@color/white"
         android:textSize="16dp"
         android:padding="5dp"
         />
+
 
 </LinearLayout>

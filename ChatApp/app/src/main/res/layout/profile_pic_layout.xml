@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:layout_gravity="left"
+    android:orientation="horizontal"
+    android:layout_margin="3dp">
+
+
+    <Button
+        android:id="@+id/actionbar_profile_back_btn"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_border_disabled"
+        android:drawableLeft="@drawable/ic_signup_back" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/actionbar_profile_pic"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/sample_img"
+        android:background="@drawable/profile_pic_round_bg"
+        android:layout_margin="5dp"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="1dp"
+        android:padding="5dp"
+        />
+
+    <TextView
+        android:id="@+id/actionbar_profile_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="UserName"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:padding="5dp"
+        />
+
+
+</LinearLayout>

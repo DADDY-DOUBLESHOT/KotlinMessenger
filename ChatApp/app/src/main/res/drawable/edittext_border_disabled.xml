@@ -13,9 +13,5 @@
         android:right="0dp"
         android:bottom="0dp"
         />
-    <stroke
-        android:width="8dp"
-        android:color="#1DE9B6"
-        />
 
 </shape>

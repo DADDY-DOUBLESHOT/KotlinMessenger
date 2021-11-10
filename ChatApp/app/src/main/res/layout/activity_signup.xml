@@ -27,7 +27,7 @@ android:padding="10dp"
             android:id="@+id/signup_back_btn"
             android:layout_width="52dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/editext_bg"
+            android:background="@drawable/edittext_border_disabled"
             android:drawableLeft="@drawable/ic_signup_back" />
         <TextView
             android:layout_width="match_parent"

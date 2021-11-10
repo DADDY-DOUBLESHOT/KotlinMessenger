@@ -3,6 +3,7 @@ package com.example.chatapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
@@ -61,10 +62,12 @@ class msgscreen : AppCompatActivity() {
     {
         if(fb_mAuth.currentUser==null)
         {
+            Log.d("msgscreen","here now");
             signup_intent=Intent(this,signup_intent::class.java);
             signup_intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(signup_intent);
 
         }
+        else return;
     }
 }

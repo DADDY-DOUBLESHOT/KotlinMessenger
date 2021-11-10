@@ -17,6 +17,7 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.versionedparcelable.VersionedParcelize
 import com.example.chatapp.R.id.signup_usr_img
+import com.example.chatapp.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -317,11 +318,4 @@ class signup : AppCompatActivity()
     {
             return UUID.randomUUID().toString();
     }
-}
-
-@IgnoreExtraProperties
-
-@Parcelize
-class User(val uid:String?=null,val username:String?=null,val profile_pic :String?=null) :Parcelable{
-    constructor():this("","","");
 }
