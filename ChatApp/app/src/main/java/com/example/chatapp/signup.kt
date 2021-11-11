@@ -198,9 +198,6 @@ class signup : AppCompatActivity()
 
 
 
-
-
-
             }
 
             .addOnCanceledListener {
@@ -254,7 +251,8 @@ class signup : AppCompatActivity()
         val userid=fb_mAuth.uid;
 
 
-        val uniqueid=signin_usr_name.text.toString()+"_"+filenameCreate();
+//        val uniqueid=signin_usr_name.text.toString()+"_"+filenameCreate();
+        val uniqueid=fb_mAuth.uid.toString();
         val user =User(userid,signin_usr_name.text.toString(),profile_pic_url);
 //        val user= hashMapOf(
 //            "uid" to userid.toString(),

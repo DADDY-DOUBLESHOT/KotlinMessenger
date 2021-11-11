@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/mate_black"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    >
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/msgscreen_profile_pic"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/profile_pic_round_bg"
+        android:src="@drawable/sample_img"
+        />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/msgcreen_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="USERNAME"
+            android:padding="8dp"
+            android:layout_marginLeft="7dp"
+            />
+        <TextView
+            android:id="@+id/msgcreen_latest_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Latest Message from user"
+            android:layout_marginLeft="10dp"
+            android:padding="2dp"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>

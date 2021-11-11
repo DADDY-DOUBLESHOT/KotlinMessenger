@@ -174,6 +174,9 @@ class chatlog : AppCompatActivity() {
 
         val ref=fb_DB.getReference("/user-messages/${fb_mAuth.uid}/$userUID").push()
         val ref2=fb_DB.getReference("/user-messages/$userUID/${fb_mAuth.uid}").push()
+        val latest_msg_ref=fb_DB.getReference("/latest_user-messages/$userUID/${fb_mAuth.uid}")
+        val latest_msg_ref2=fb_DB.getReference("/latest_user-messages/${fb_mAuth.uid}/$userUID")
+
         if(fb_mAuth.uid==null)return
 
         val chatMessage =ChatMessage(ref.key!!,text,fb_mAuth.uid!!,userUID,System.currentTimeMillis() /1000)
@@ -186,6 +189,16 @@ class chatlog : AppCompatActivity() {
             .addOnSuccessListener {
                 Log.d(TAG,"msg sent ref -> ${ref.key}  $it")
             }
+        latest_msg_ref.setValue(chatMessage)
+            .addOnSuccessListener {
+                Log.d(TAG,"latest message updated -> ${ref.key}  $it")
+            }
+        latest_msg_ref2.setValue(chatMessage)
+            .addOnSuccessListener {
+                Log.d(TAG,"latest message updated -> ${ref.key}  $it")
+            }
+
+
 
         message.text.clear();
     }
