@@ -58,12 +58,15 @@ class chatlog : AppCompatActivity() {
 
 
         sendBTN=findViewById<Button>(R.id.chatlog_send_btn)
+
         message=findViewById<EditText>(R.id.chatlog_message)
+
 
 
         supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
         supportActionBar?.setDisplayShowCustomEnabled(true)
         supportActionBar?.setCustomView(R.layout.profile_pic_layout)
+        supportActionBar?.setHomeButtonEnabled(true)
 
         fb_mAuth= FirebaseAuth.getInstance()
         fb_DB= FirebaseDatabase.getInstance("https://kotlinmessenger-901b5-default-rtdb.asia-southeast1.firebasedatabase.app/")
@@ -84,12 +87,16 @@ class chatlog : AppCompatActivity() {
             sendMessage()
         }
 
-//        backBTN.setOnClickListener {
-//            Log.d("back","Back to msgscreen")
-//            msgscreenIntent=Intent(this,msgscreen::class.java);
-//            startActivity(msgscreenIntent);
-//
-//        }
+        findViewById<Button>(R.id.actionbar_profile_back_btn).setOnClickListener {
+
+            Log.d("back","Back to msgscreen")
+            msgscreenIntent=Intent(this,msgscreen::class.java);
+            startActivity(msgscreenIntent);
+            finish();
+
+        }
+
+
 
 
 
