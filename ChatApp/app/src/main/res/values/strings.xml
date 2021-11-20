@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
 
     <string name="app_name">Piper Chat</string>
@@ -13,10 +13,13 @@
     <string name="login_email_tv">Email</string>
     <string name="login_pass_tv">Password</string>
     <string name="login_btn">LOGIN</string>
-    <string name="login_info_2_tv">Dont have an account? </string>
+    <string name="login_info_2_tv" tools:ignore="StringEscaping">Don\'t have an account? </string>
     <string name="login_info_3_tv">Sign up</string>
-    <string name="login_example_email_et">example@mail.com</string>
+    <string name="login_example_email_et">Enter your email</string>
     <string name="login_example_pass_et">Enter your password</string>
+    <string name="login_or">OR</string>
+    <string name="login_extra1">By continuing, you agree to our</string>
+    <string name="login_extra2"><u>Terms of Service</u>     <u>Privacy Policy</u>  <u>Content Policy</u></string>
 
 
     <!--***************-->

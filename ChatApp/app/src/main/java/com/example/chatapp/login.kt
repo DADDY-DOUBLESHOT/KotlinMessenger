@@ -16,7 +16,7 @@ class login : AppCompatActivity()
     lateinit var apple_account:ImageView;
     lateinit var usr_email:EditText;
     lateinit var usr_pass:EditText;
-    lateinit var login_btn:Button;
+    lateinit var login_btn:TextView;
     lateinit var signup_link:TextView;
     lateinit var signup_Intent :Intent;
     lateinit var msgscreen_Intent:Intent;
@@ -26,9 +26,10 @@ class login : AppCompatActivity()
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        supportActionBar?.hide()
         google_account=findViewById(R.id.login_google_ac);
         apple_account=findViewById(R.id.login_apple_ac);
         usr_email=findViewById(R.id.usr_email);
